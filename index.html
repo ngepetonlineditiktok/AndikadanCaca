@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tasya 💖</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1e1e2f, #0d0d1a);
+    color: white;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    transition: 1.5s;
+}
+
+/* Twinkling stars */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+@keyframes twinkle {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 420px;
+    box-shadow: 0 0 40px rgba(255, 100, 200, 0.3);
+    position: relative;
+    z-index: 10;
+}
+
+img {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.7);
+    box-shadow: 0 0 25px rgba(255, 150, 200, 0.6);
+    margin-bottom: 20px;
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 15px rgba(255,150,200,0.5); }
+    to { box-shadow: 0 0 35px rgba(255,150,200,0.9); }
+}
+
+button {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+#noBtn {
+    position: absolute;
+}
+
+.fallItem {
+    position: absolute;
+    font-size: 22px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card">
+    <img src="tasya.jpg" alt="Tasya">
+    <h1>Tasya Nur Afrida ✨</h1>
+    <p>You are my calm in this chaotic world.</p>
+
+    <button onclick="startMusic()">Play Our Song 🎵</button>
+    <br><br>
+    <button onclick="yesAnswer()">YES 💖</button>
+    <button id="noBtn">NO 😅</button>
+</div>
+
+<script>
+function startMusic() {
+    var music = document.getElementById("bgMusic");
+    music.currentTime = 40;
+    music.play();
+}
+
+function yesAnswer() {
+    document.body.style.background = "#0a0a15";
+
+    const card = document.getElementById("card");
+    card.innerHTML = `
+        <h1 style="font-weight:300;">💖</h1>
+        <p id="typeText" style="font-size:18px; margin-top:20px; line-height:1.6;"></p>
+    `;
+
+    const message = "Dont worry my buubie Caca Marica... Everywhere I go, I see you. The land, the sea, and the sky... As the heaven itself its you, Caca.";
+
+    let i = 0;
+
+    function typeWriter() {
+        if (i < message.length) {
+            document.getElementById("typeText").innerHTML += message.charAt(i);
+            i++;
+            setTimeout(typeWriter, 55);
+        } else {
+            for (let j = 0; j < 30; j++) createFalling("❤️");
+            for (let j = 0; j < 10; j++) createFalling("🍜");
+        }
+    }
+
+    typeWriter();
+}
+
+// NO button runs away
+const noBtn = document.getElementById("noBtn");
+const card = document.getElementById("card");
+
+noBtn.addEventListener("mouseover", () => {
+    const rect = card.getBoundingClientRect();
+    const x = Math.random() * (rect.width - noBtn.offsetWidth);
+    const y = Math.random() * (rect.height - noBtn.offsetHeight);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+// Twinkling stars generator
+for (let i = 0; i < 80; i++) {
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(star);
+}
+
+// Floating petals + mie ayam
+function createFalling(emoji) {
+    const item = document.createElement("div");
+    item.classList.add("fallItem");
+    item.innerHTML = emoji;
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    document.body.appendChild(item);
+    setTimeout(() => item.remove(), 8000);
+}
+
+// subtle petals continuously
+setInterval(() => createFalling("🌸"), 1200);
+</script>
+
+</body>
+</html>
